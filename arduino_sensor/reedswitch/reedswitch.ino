@@ -1,4 +1,4 @@
-int read_pin = 13; // 다른스위치핀은 gnd
+int reed_pin = 13; // 다른스위치핀은 gnd
 int state;
 int pulse_pin = 5;
 int dir_pin = 4;
