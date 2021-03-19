@@ -70,7 +70,7 @@ void loop() {
   
   stepper.run();
 
-  //  // 왔다갔다
+  //왔다갔다
   //  if (state1 == LOW && state2 == HIGH) {
   //    Serial.println("앞");
   //    digitalWrite(dir_pin, HIGH);
