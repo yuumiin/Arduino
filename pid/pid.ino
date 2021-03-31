@@ -4,6 +4,7 @@
 #define DO 3
 #define CS 4
 #define CLK 5
+#define relayPin 9
 
 // gain 값
 double Kp = 0; // 비례상수 (기준값과 현재값 오차에 kp 곱해 오차값 줄임)
@@ -87,7 +88,10 @@ double PIDControl(double input) {
   result = constrain(result, 0, 255);
 
   if (run == 1) {
-    analogWrite(9, result);
+    analogWrite(relayPin, result);
+  }
+  else {
+    analogWrite(relayPin, 0);
   }
 
   lastError = error;
