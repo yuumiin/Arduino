@@ -17,13 +17,13 @@ void loop()
     Vout = (value  * 5.0) / 1024.0; //Conversion analog to digital for the temperature read voltage
 //    Temp = (Vout - Vref) / 0.005; //Temperature calculation
     Temp = (Vout - 1.23) / 0.005;
-    Serial.print("Vout = ");
-    Serial.println(Vout);
-    Serial.print("Temperature1= ");
+//    Serial.print("Vout = ");
+//    Serial.println(Vout);
+    Serial.print("Temperature= ");
     Serial.println(Temp);
 //    Serial.print("Referent Voltage= ");
 //    Serial.println(Vref);
-    Serial.print("Referent Voltage= 1.23");
+//    Serial.print(" Referent Voltage = 1.23 ");
 
     delay(200);
 }

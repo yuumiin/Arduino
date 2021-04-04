@@ -4,7 +4,6 @@
 #define DO 3
 #define CS 4
 #define CLK 5
-#define relayPin 9
 
 // gain 값
 double Kp = 0; // 비례상수 (기준값과 현재값 오차에 kp 곱해 오차값 줄임)
@@ -66,13 +65,14 @@ double ReadTemperature()
   else
   {
     // Serial.print("C = ");
-    Serial.println(celsius);
+    Serial.print(celsius);
+    Serial.print(",");
   }
   return celsius;
 }
 
 double PIDControl(double input) {
-  Serial.print("Kp : "); Serial.print(Kp); Serial.print(" , Ki : "); Serial.print(Ki); Serial.print(" , Kd : "); Serial.print(Kd);
+  // Serial.print("Kp : "); Serial.print(Kp); Serial.print(" , Ki : "); Serial.print(Ki); Serial.print(" , Kd : "); Serial.print(Kd);
   currentTime = millis(); // 현재 시간
   elapsedTime = currentTime - previousTime; // 수행시간
   // Serial.print("current Time = "); Serial.print(currentTime); Serial.print(" , 경과시간 = "); Serial.println(elapsedTime);
@@ -88,10 +88,7 @@ double PIDControl(double input) {
   result = constrain(result, 0, 255);
 
   if (run == 1) {
-    analogWrite(relayPin, result);
-  }
-  else {
-    analogWrite(relayPin, 0);
+    analogWrite(9, result);
   }
 
   lastError = error;

@@ -1,5 +1,5 @@
 {
     "board": "arduino:avr:uno",
-    "port": "COM7",
-    "sketch": "sketch_mar30a\\encoder.ino"
+    "port": "COM4",
+    "sketch": "pid/pid.ino"
 }
