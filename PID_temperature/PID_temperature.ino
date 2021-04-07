@@ -1,9 +1,11 @@
-#include <SPI.h>
-#include "Adafruit_MAX31855.h"
+#include <Wire.h>
+#include <Adafruit_ADS1X15.h>
 
 #define DO 3
 #define CS 4
 #define CLK 5
+
+Adafruit_ADS1115 ads;
 
 // gain 값
 double Kp = 0; // 비례상수 (기준값과 현재값 오차에 kp 곱해 오차값 줄임)
@@ -19,65 +21,31 @@ double setPoint = 0;
 double cumError, rateError;
 float temperature_read = 0.0;
 
+float Temp;               //Temperature
+float Vref;               //Referent voltage
+float Vout;               //Voltage after adc
+float value;              //Sensor value
+
 int run; //DC supply on/off
+float data[5];
+int16_t adc0;
 
-float data[10]; // run, kp, ki, kd, setPoint
-
-Adafruit_MAX31855 thermocouple(CLK, CS, DO);
 
 void setup() {
   Serial.begin(115200);
-
-  while (!Serial)
-    delay(1);
-
-  // Serial.println("MAX31855 test");
-  // wait for MAX chip to stabilize
-  delay(1000);
-  // Serial.print("Initializing sensor...");
-  if (!thermocouple.begin())
-  {
-    Serial.println("Thermocouple ERROR");
-    while (1)
-      delay(10);
-  }
-  // Serial.println("DONE.");
-  pinMode(9, OUTPUT);
+  ads.begin();
+  pinMode(outputPin, OUTPUT);
+  delay(100);
 }
 
-void loop() {
-  input_prameter();
-  temperature_read = ReadTemperature();
-  output = PIDControl(temperature_read);
-  delay(500);
-}
-
-double ReadTemperature()
+void loop()
 {
-  // Serial.print("Internal Temp = ");
-  // Serial.println(thermocouple.readInternal());
-
-  double celsius = thermocouple.readCelsius();
-  if (isnan(celsius))
-  {
-    Serial.println("Something wrong with thermocouple!");
-  }
-  else
-  {
-    // Serial.print("C = ");
-    Serial.print(celsius);
-    Serial.print(",");
-  }
-  return celsius;
-}
-
-double PIDControl(double input) {
-  // Serial.print("Kp : "); Serial.print(Kp); Serial.print(" , Ki : "); Serial.print(Ki); Serial.print(" , Kd : "); Serial.print(Kd);
+  input_prameter();
+  temperature_read = readThermocouple();
   currentTime = millis(); // 현재 시간
   elapsedTime = currentTime - previousTime; // 수행시간
-  // Serial.print("current Time = "); Serial.print(currentTime); Serial.print(" , 경과시간 = "); Serial.println(elapsedTime);
 
-  // 제어하고자 하는 값(input)과 설정값을 비교하여 오차계산
+// 제어하고자 하는 값(input)과 설정값을 비교하여 오차계산
   error = setPoint - input; // 오차 (설정값 - 입력값)
 
   cumError += error * elapsedTime; // I, 시간에 대한 누적오차
@@ -88,20 +56,23 @@ double PIDControl(double input) {
   result = constrain(result, 0, 255);
 
   if (run == 1) {
-    analogWrite(9, result);
+    analogWrite(9, 255 - result);
+  }
+  else if (run == 0) {
+    analogWrite(9, 255);
   }
 
   lastError = error;
   previousTime = currentTime;
+  delay(100);
+}
 
-//   Serial.print(" // error = "); Serial.print(error);
-//   Serial.print(" P : "); Serial.print(Kp * error);
-//   Serial.print(" I : "); Serial.print(Ki * cumError);
-//   Serial.print(" D : "); Serial.print(Kd * rateError);
-//   Serial.print(" pid = "); Serial.print(Kp * error + Ki * cumError + Kd * rateError);
-//   Serial.print(" analogWrite input = "); Serial.println(result);
-
-  return result;
+double readThermocouple() {
+  value = ads.readADC_SingleEnded(0);
+  Vout = value * 0.1875 / 1000;
+  Temp = (Vout - 1.23) / 0.005;
+  delay(100);
+  return Temp;
 }
 
 void input_prameter() {
