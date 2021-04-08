@@ -75,7 +75,7 @@ double PIDControl(double input) {
   // Serial.print("Kp : "); Serial.print(Kp); Serial.print(" , Ki : "); Serial.print(Ki); Serial.print(" , Kd : "); Serial.print(Kd);
   currentTime = millis(); // 현재 시간
   elapsedTime = currentTime - previousTime; // 수행시간
-  // Serial.print("current Time = "); Serial.print(currentTime); Serial.print(" , 경과시간 = "); Serial.println(elapsedTime);
+   Serial.print("current Time = "); Serial.print(currentTime); Serial.print(" , 경과시간 = "); Serial.println(elapsedTime);
 
   // 제어하고자 하는 값(input)과 설정값을 비교하여 오차계산
   error = setPoint - input; // 오차 (설정값 - 입력값)

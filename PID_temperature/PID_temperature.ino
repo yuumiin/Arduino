@@ -4,6 +4,7 @@
 #define DO 3
 #define CS 4
 #define CLK 5
+#define outputPin 9
 
 Adafruit_ADS1115 ads;
 
@@ -25,11 +26,10 @@ float Temp;               //Temperature
 float Vref;               //Referent voltage
 float Vout;               //Voltage after adc
 float value;              //Sensor value
+int16_t adc0;
 
 int run; //DC supply on/off
 float data[5];
-int16_t adc0;
-
 
 void setup() {
   Serial.begin(115200);
@@ -44,9 +44,10 @@ void loop()
   temperature_read = readThermocouple();
   currentTime = millis(); // 현재 시간
   elapsedTime = currentTime - previousTime; // 수행시간
+  Serial.println(elapsedTime);
 
 // 제어하고자 하는 값(input)과 설정값을 비교하여 오차계산
-  error = setPoint - input; // 오차 (설정값 - 입력값)
+  error = setPoint - temperature_read; // 오차 (설정값 - 입력값)
 
   cumError += error * elapsedTime; // I, 시간에 대한 누적오차
   rateError = (error - lastError) / elapsedTime; // D, 에러의 변화율
