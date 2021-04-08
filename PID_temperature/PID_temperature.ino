@@ -1,9 +1,6 @@
 #include <Wire.h>
 #include <Adafruit_ADS1X15.h>
 
-#define DO 3
-#define CS 4
-#define CLK 5
 #define outputPin 9
 
 Adafruit_ADS1115 ads;
