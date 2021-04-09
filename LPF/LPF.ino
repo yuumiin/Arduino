@@ -10,11 +10,12 @@ double pre_time = 0;
 double temperature;
 int alpha = 170;
 int PWM_value;
+double lpf_value;
 
 void setup() {
   Serial.begin(115200);
   ads.begin();
-  temperature = readTemp();
+  pre_value = readTemp();
 }
 
 void loop() {
@@ -22,13 +23,9 @@ void loop() {
   double dt = (st_time - pre_time);
   //temperature: measured value from a sensor (센서에서 측정된 값)
   temperature = readTemp();
-  double lpf_value;
-
   lpf_value = alpha / (alpha + dt) * pre_value + dt / (alpha + dt) * temperature;
 
-  Serial.print("temp:");Serial.print(temperature); Serial.print("\t");
-  Serial.print("alpha_170:");Serial.print(lpf_value); Serial.print("\t");
-  Serial.println(",");
+  Serial.print(lpf_value);Serial.print(",");
 
   pre_value = lpf_value;
   pre_time = st_time;
