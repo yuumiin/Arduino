@@ -21,7 +21,6 @@ void setup() {
 void loop() {
   double st_time = millis();
   double dt = (st_time - pre_time);
-  //temperature: measured value from a sensor (센서에서 측정된 값)
   temperature = readTemp();
   lpf_value = alpha / (alpha + dt) * pre_value + dt / (alpha + dt) * temperature;
 
