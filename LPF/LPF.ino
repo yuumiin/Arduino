@@ -19,15 +19,15 @@ void setup() {
 }
 
 void loop() {
-  double st_time = millis();
-  double dt = (st_time - pre_time);
+  double current_time = millis();
+  double dt = (current_time - pre_time);
   temperature = readTemp();
   lpf_value = alpha / (alpha + dt) * pre_value + dt / (alpha + dt) * temperature;
 
   Serial.print(lpf_value);Serial.print(",");
 
   pre_value = lpf_value;
-  pre_time = st_time;
+  pre_time = current_time;
   delay(100);
 
   PWMControl();
@@ -39,7 +39,6 @@ double readTemp() {
   float Temp = (Vout - 1.23) / 0.005;
   return Temp;
 }
-
 void PWMControl() {
   if (Serial.available()) {
     String value = Serial.readStringUntil('\n');
@@ -47,3 +46,10 @@ void PWMControl() {
     analogWrite(outputPin, 255 - PWM_value);
   }
 }
+
+/*
+참고
+https://pinkwink.kr/978
+https://pinkwink.kr/931
+https://sw-ryu0405.blogspot.com/2019/12/low-pass-filter-lpf-arduino-code.html
+*/
