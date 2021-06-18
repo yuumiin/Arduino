@@ -30,7 +30,7 @@
 - SMU calibaration
   - [code](https://github.com/yuumiin/Arduino/blob/master/smu/smu.ino)
 
-## study
+## etc
 ### 1. pyqt 연동
 - arduino와 pyqt를 연결하여 서보모터 제어
   - [code](https://github.com/yuumiin/Arduino/blob/master/arduino_pyqt_connect/sketch_jan05a/sketch_jan05a.ino)
