@@ -15,7 +15,7 @@
   - [code](https://github.com/yuumiin/Arduino/blob/master/arduino_sensor/steppermotor/steppermotor.ino)
 - 전체 센서들 제어 
   - [code](https://github.com/yuumiin/Arduino/blob/master/0122/0122.ino)
-- softwaresSrial 사용한 제어
+- softwaresSerial 사용한 제어
   - [code](https://github.com/yuumiin/Arduino/tree/master/softwareSerial)
 
 ## PID control
