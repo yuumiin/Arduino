@@ -28,7 +28,7 @@
  
 ## SMU
 - SMU calibaration
-  - [code](https://github.com/yuumiin/Arduino/blob/master/smu/smu.ino)
+  - [code](https://github.com/yuumiin/Arduino/blob/master/SMU_DAQ_Board/SMU_DAQ_Board.ino
 
 ## etc
 ### 1. pyqt 연동
